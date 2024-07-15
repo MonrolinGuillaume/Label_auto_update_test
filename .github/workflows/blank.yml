@@ -30,8 +30,6 @@ jobs:
       - name: Run a multi-line script
         env:
           REPO_NAME: ${{ github.event.repository.name }}
-          REPO: ${{ github.event.repository }}
         run: |
-          echo repo => $REPO
           echo repo.name => $REPO_NAME.
           echo ${{ toJson(github) }}
