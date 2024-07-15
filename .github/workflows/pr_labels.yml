@@ -1,11 +1,13 @@
-name: PR AUTO LABEL
+name: Analyse PRs reviews
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, issue_comment]
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
-  run-pr-checks:
+  analyse-reviews:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +26,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ISSUE_ID: ${{ github.event.issue.number }}
-        REPO: ${{ github.event.repository }}
+        REPO: ${{ github.repository }}
       run: node .github/scripts/update_label.js
