@@ -33,4 +33,4 @@ jobs:
           REPO: ${{ github.event.repository }}
         run: |
           echo Add other actions to build,
-          echo test, and deploy your project $REPO_NAME.
+          echo test, and deploy your project $REPO_NAME $REPO.
