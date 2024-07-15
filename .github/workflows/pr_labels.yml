@@ -24,6 +24,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ISSUE_ID: ${{ github.event.issue.number }}
-        REPO_OWNER: ${{ github.event.repository.owner }}
+        REPO_OWNER: ${{ github.event.repository_owner }}
         REPO_NAME: ${{ github.event.repository.name }}
       run: node .github/scripts/update_label.js
