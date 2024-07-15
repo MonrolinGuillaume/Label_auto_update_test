@@ -24,7 +24,7 @@ jobs:
 
     - name: Run PR script
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: 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
         ISSUE_ID: ${{ github.event.number }}
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_NAME: ${{ github.event.repository.name }}
