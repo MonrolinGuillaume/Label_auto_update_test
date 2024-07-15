@@ -34,3 +34,4 @@ jobs:
         run: |
           echo repo => $REPO
           echo repo.name => $REPO_NAME.
+          echo ${{ toJson(github) }}
