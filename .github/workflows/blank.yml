@@ -30,7 +30,7 @@ jobs:
       - name: Run a multi-line script
         env:
           REPO_NAME: ${{ github.event.repository.name }}
-          REPO: ${{ github.event.repository }}
+          REPO: ${{ github.event.owner }}
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project $REPO_NAME $REPO.
+          echo repo => $REPO
+          echo repo.name => $REPO_NAME.
