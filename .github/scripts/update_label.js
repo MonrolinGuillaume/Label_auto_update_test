@@ -68,6 +68,8 @@ async function removeLabelFromPR(label) {
 }
 
 function checkForAtLeastTwoApproval(reviews) {
+  console.log(ISSUE_ID)
+  console.log(reviews);
   return reviews.reduce((total,item) => total+(item.state==="APPROVED"), 0) >= 1
 }
 
