@@ -1,6 +1,6 @@
 import { Octokit } from "octokit"
 
-const GITHUB_TOKEN = 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;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = process.env.REPO_OWNER;
 const REPO_NAME = process.env.REPO_NAME;
 const ISSUE_ID = process.env.ISSUE_ID;
