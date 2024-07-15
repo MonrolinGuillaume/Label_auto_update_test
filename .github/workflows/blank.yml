@@ -33,3 +33,4 @@ jobs:
         run: |
           echo repo.name => $REPO_NAME.
           echo repo => ${{ toJson(github) }}
+          echo issue_id => ${{ github.event.issue.number }}
