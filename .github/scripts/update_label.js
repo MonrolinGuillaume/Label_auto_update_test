@@ -74,7 +74,7 @@ function checkForAtLeastTwoApproval(reviews) {
   return reviews.reduce((total,item) => total+(item.state==="APPROVED"), 0) >= 1
 }
 
-async function putApprovedLabel() {
+async function putApprovedLabel(currentLabels) {
   if (currentLabels.includes(LABEL_REVIEW_REQUESTED)) {
     await removeLabelFromPR(LABEL_REVIEW_REQUESTED);
   }
@@ -83,7 +83,7 @@ async function putApprovedLabel() {
   }
 }
 
-async function putReviewRequestedLabel() {
+async function putReviewRequestedLabel(currentLabels) {
   if (currentLabels.includes(LABEL_APPROVED)) {
     await removeLabelFromPR(LABEL_APPROVED);
   }
@@ -96,12 +96,12 @@ async function processPullRequests() {
       const reviews = await getReviewsForPR();
       const currentLabels = await getLabelFromPR();
       if (eventType === 'synchronize') {
-        await putReviewRequestedLabel();
+        await putReviewRequestedLabel(currentLabels);
       } else {
         if (checkForAtLeastTwoApproval(reviews)) {
-          await putApprovedLabel();
+          await putApprovedLabel(currentLabels);
         } else {
-          await putReviewRequestedLabel();
+          await putReviewRequestedLabel(currentLabels);
         }
       }
 }
