@@ -2,7 +2,7 @@ name: Analyse PRs reviews
 
 "on":
   pull_request_target:
-    types: [opened]
+    types: [opened, synchronize]
   pull_request_review:
     types: [submitted]
 
@@ -31,4 +31,5 @@ jobs:
         ISSUE_ID: ${{ github.event.number || github.event.pull_request.number}}
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_NAME: ${{ github.event.repository.name }}
+        GITHUB_EVENT_ACTION: ${{ github.event.action }}
       run: node .github/scripts/update_label.js

@@ -4,6 +4,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = process.env.REPO_OWNER;
 const REPO_NAME = process.env.REPO_NAME;
 const ISSUE_ID = process.env.ISSUE_ID;
+const eventType = process.env.GITHUB_EVENT_ACTION;
 const LABEL_REVIEW_REQUESTED = ':eyes: Review requested :eyes:';
 const LABEL_APPROVED = ':rocket: Approved :rocket:';
 
@@ -73,22 +74,34 @@ function checkForAtLeastTwoApproval(reviews) {
   return reviews.reduce((total,item) => total+(item.state==="APPROVED"), 0) >= 1
 }
 
+async function putApprovedLabel() {
+  if (currentLabels.includes(LABEL_REVIEW_REQUESTED)) {
+    await removeLabelFromPR(LABEL_REVIEW_REQUESTED);
+  }
+  if (!currentLabels.includes(LABEL_APPROVED)) {
+    await addLabelToPR(LABEL_APPROVED);
+  }
+}
+
+async function putReviewRequestedLabel() {
+  if (currentLabels.includes(LABEL_APPROVED)) {
+    await removeLabelFromPR(LABEL_APPROVED);
+  }
+  if (!currentLabels.includes(LABEL_REVIEW_REQUESTED)) {
+    await addLabelToPR(LABEL_REVIEW_REQUESTED);
+  }
+}
+
 async function processPullRequests() {
       const reviews = await getReviewsForPR();
       const currentLabels = await getLabelFromPR();
-      if (checkForAtLeastTwoApproval(reviews)) {
-        if (currentLabels.includes(LABEL_REVIEW_REQUESTED)) {
-          await removeLabelFromPR(LABEL_REVIEW_REQUESTED);
-        }
-        if (!currentLabels.includes(LABEL_APPROVED)) {
-            await addLabelToPR(LABEL_APPROVED);
-        }
+      if (eventType === 'synchronize') {
+        await putReviewRequestedLabel();
       } else {
-        if (currentLabels.includes(LABEL_APPROVED)) {
-          await removeLabelFromPR(LABEL_APPROVED);
-        }
-        if (!currentLabels.includes(LABEL_REVIEW_REQUESTED)) {
-            await addLabelToPR(LABEL_REVIEW_REQUESTED);
+        if (checkForAtLeastTwoApproval(reviews)) {
+          await putApprovedLabel();
+        } else {
+          await putReviewRequestedLabel();
         }
       }
 }
