@@ -17,13 +17,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: npm install octokit
+    - name: Set up jq
+      run: sudo apt-get install -y jq
 
     - name: Run PR script
       env:
@@ -32,4 +27,4 @@ jobs:
         REPO_OWNER: ${{ github.repository_owner }}
         REPO_NAME: ${{ github.event.repository.name }}
         GITHUB_EVENT_ACTION: ${{ github.event.action }}
-      run: node .github/scripts/update_label.js
+      run: bash .github/scripts/update_label.sh
