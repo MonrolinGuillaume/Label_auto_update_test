@@ -4,8 +4,8 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = process.env.REPO_OWNER;
 const REPO_NAME = process.env.REPO_NAME;
 const ISSUE_ID = process.env.ISSUE_ID;
-const LABEL_REVIEW_REQUESTED = 'review requested';
-const LABEL_APPROVED = 'approved';
+const LABEL_REVIEW_REQUESTED = ':eyes: Review requested :eyes:';
+const LABEL_APPROVED = ':eyes: Review requested :eyes:';
 
 
 const octokit = new Octokit({
